@@ -1,15 +1,15 @@
 <?php
-$host = 'localhost'; // Ganti sesuai host Anda
-$dbname = 'db_event_info'; // Ganti dengan nama database Anda
-$username = 'root'; // Ganti dengan username database Anda
-$password = ''; // Ganti dengan password database Anda
+// Ambil konfigurasi database dari environment variables
+$host     = getenv('MYSQLHOST');
+$user     = getenv('MYSQLUSER');
+$password = getenv('MYSQLPASSWORD');
+$dbname   = getenv('MYSQLDATABASE');
 
-try {
-    // Membuat koneksi PDO
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Set mode error PDO
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Koneksi gagal: " . $e->getMessage());
+// Buat koneksi menggunakan mysqli
+$koneksi = new mysqli($host, $user, $password, $dbname);
+
+// Cek koneksi
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
 }
 ?>
